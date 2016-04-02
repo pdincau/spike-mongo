@@ -27,7 +27,7 @@ public class MongoDbRepository {
         database.getCollection(VIEWS).insertOne(Document.parse(json));
     }
 
-    public void findBy(EqualityCriteria ... criterias) {
+    public void findBy(EqualityCriteria... criterias) {
         List<Bson> bsons = criteriaToBsons(criterias);
         FindIterable<Document> views = database.getCollection(VIEWS).find(and(bsons));
         System.out.print(views.first());
@@ -38,7 +38,7 @@ public class MongoDbRepository {
         System.out.println(database.getCollection(VIEWS).count());
     }
 
-    private List<Bson> criteriaToBsons(EqualityCriteria[] criterias) {
+    private List<Bson> criteriaToBsons(EqualityCriteria... criterias) {
         return stream(criterias).map(c -> eq(c.getField(), c.getValue())).collect(toList());
     }
 }
