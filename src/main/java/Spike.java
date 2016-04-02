@@ -4,11 +4,14 @@ public class Spike {
 
     public static void main(String[] args) {
         MongoDbRepository repository = new MongoDbRepository();
-
         seed(repository);
         System.out.println(new Date());
-        repository.find();
+        repository.findBy(searchCriterias());
         System.out.println(new Date());
+    }
+
+    private static EqualityCriteria[] searchCriterias() {
+        return new EqualityCriteria[]{new EqualityCriteria("foo", "1"), new EqualityCriteria("bar.baz", "2")};
     }
 
     private static void seed(MongoDbRepository repository) {
@@ -21,5 +24,6 @@ public class Spike {
     }
 
     private static String jsonFor(int i) {
-        return "{\"foo\":\"1\",\"bar\":{\"baz\":\"" + i + "\"}";
+        return "{\"foo\":\"1\",\"bar\":{\"baz\":\"" + i + "\"}}";
+    }
 }
